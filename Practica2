@@ -1,0 +1,21 @@
+public class PotenciasFraccionales {
+    public static void main(String[] args) {
+        // Inicializar variables
+        int indice = 1;
+        double fraccion = 1.0;
+
+        // Imprimir encabezado de la tabla
+        System.out.printf("%-10s %-20s %-20s%n", "Índice", "Fracción", "Decimal");
+
+        // Generar potencias fraccionales y mostrar en la tabla
+        while (fraccion > 0.000001) {
+            System.out.printf("%-10d %-20s %-20f%n", indice, formatFraccion(fraccion), fraccion);
+            fraccion /= 2;
+            indice++;
+        }
+    }
+
+    public static String formatFraccion(double fraccion) {
+        return "1/" + (int) Math.pow(2, Math.round(Math.log(1.0 / fraccion) / Math.log(2)));
+    }
+}
