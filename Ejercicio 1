@@ -1,0 +1,27 @@
+def contar_mayores_que_x(lista, x):
+    # Inicializamos el contador
+    contador = 0
+    
+    # Iteramos a través de la lista
+    for numero in lista:
+        # Verificamos si el número es mayor que x
+        if numero > x:
+            contador += 1
+    
+    # Imprimimos el resultado
+    print(f"De tu lista, {contador} valores son mayores a {x}")
+
+# Solicitar al usuario la cantidad de números
+n = int(input("Ingresa cuántos números quieres leer: "))
+
+# Solicitar al usuario ingresar los números
+lista_numeros = []
+for i in range(n):
+    numero = float(input("Ingresa un número: "))
+    lista_numeros.append(numero)
+
+# Solicitar al usuario ingresar el valor x
+valor_x = float(input("Ingresa el valor x con el cual comparar: "))
+
+# Llamar a la función para contar los números mayores que x
+contar_mayores_que_x(lista_numeros, valor_x)
