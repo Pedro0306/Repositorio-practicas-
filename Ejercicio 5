@@ -1,0 +1,87 @@
+import java.util.Scanner;
+
+public class ProgramaCuadrado {
+    public static void main(String[] args) {
+        // Crear un objeto Scanner para leer la entrada del usuario
+        Scanner scanner = new Scanner(System.in);
+
+        // Leer el tamaño del arreglo cuadrado
+        System.out.print("Inserta el tamaño n: ");
+        int n = scanner.nextInt();
+
+        // Leer el arreglo cuadrado
+        int[][] arreglo = new int[n][n];
+        System.out.println("Inserta los elementos del arreglo:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arreglo[i][j] = scanner.nextInt();
+            }
+        }
+
+        // Verificar si el arreglo tiene números consecutivos
+        if (esConsecutivo(arreglo, n * n)) {
+            System.out.println("El arreglo sí tiene números consecutivos");
+        } else {
+            System.out.println("El arreglo no tiene números consecutivos");
+        }
+
+        // Verificar si el arreglo es un cuadrado mágico
+        if (esCuadradoMagico(arreglo, n)) {
+            System.out.println("El arreglo es un cuadrado mágico");
+        } else {
+            System.out.println("El arreglo no es un cuadrado mágico");
+        }
+    }
+
+    // Función para verificar si el arreglo tiene números consecutivos desde 1 hasta n^2
+    private static boolean esConsecutivo(int[][] arreglo, int nCuadrado) {
+        int n = arreglo.length;
+
+        // Crear un arreglo plano con los elementos del arreglo cuadrado
+        int[] flattenArr = new int[n * n];
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                flattenArr[index++] = arreglo[i][j];
+            }
+        }
+
+        // Verificar si los números son consecutivos
+        for (int i = 0; i < nCuadrado; i++) {
+            if (flattenArr[i] != i + 1) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Función para verificar si el arreglo es un cuadrado mágico
+    private static boolean esCuadradoMagico(int[][] arreglo, int n) {
+        // Calcular la suma mágica
+        int sumaMagica = n * (n * n + 1) / 2;
+
+        // Verificar filas y columnas
+        for (int i = 0; i < n; i++) {
+            int sumaFila = 0;
+            int sumaColumna = 0;
+            for (int j = 0; j < n; j++) {
+                sumaFila += arreglo[i][j];
+                sumaColumna += arreglo[j][i];
+            }
+            if (sumaFila != sumaMagica || sumaColumna != sumaMagica) {
+                return false;
+            }
+        }
+
+        // Verificar diagonales
+        int sumaDiagonalPrincipal = 0;
+        int sumaDiagonalSecundaria = 0;
+        for (int i = 0; i < n; i++) {
+            sumaDiagonalPrincipal += arreglo[i][i];
+            sumaDiagonalSecundaria += arreglo[i][n - i - 1];
+        }
+
+        return sumaDiagonalPrincipal == sumaMagica && sumaDiagonalSecundaria == sumaMagica;
+    }
+}
