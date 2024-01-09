@@ -1,0 +1,65 @@
+// Función que verifica si un arreglo de 9 × 9 es una solución válida de sudoku
+function verificarSudoku(arreglo) {
+  // Recorrer cada fila del arreglo
+  for (let i = 0; i < 9; i++) {
+    // Crear un conjunto vacío para almacenar los valores de la fila
+    let fila = new Set();
+    // Recorrer cada columna de la fila
+    for (let j = 0; j < 9; j++) {
+      // Obtener el valor en la posición [i][j] del arreglo
+      let valor = arreglo[i][j];
+      // Verificar si el valor es un número entre 1 y 9
+      if (valor < 1 || valor > 9) {
+        // Si no lo es, el arreglo no es válido
+        return false;
+      }
+      // Verificar si el valor ya está en el conjunto de la fila
+      if (fila.has(valor)) {
+        // Si lo está, el arreglo no es válido
+        return false;
+      }
+      // Agregar el valor al conjunto de la fila
+      fila.add(valor);
+    }
+  }
+  // Recorrer cada columna del arreglo
+  for (let j = 0; j < 9; j++) {
+    // Crear un conjunto vacío para almacenar los valores de la columna
+    let columna = new Set();
+    // Recorrer cada fila de la columna
+    for (let i = 0; i < 9; i++) {
+      // Obtener el valor en la posición [i][j] del arreglo
+      let valor = arreglo[i][j];
+      // Verificar si el valor ya está en el conjunto de la columna
+      if (columna.has(valor)) {
+        // Si lo está, el arreglo no es válido
+        return false;
+      }
+      // Agregar el valor al conjunto de la columna
+      columna.add(valor);
+    }
+  }
+  // Recorrer cada región de 3 × 3 del arreglo
+  for (let i = 0; i < 9; i += 3) {
+    for (let j = 0; j < 9; j += 3) {
+      // Crear un conjunto vacío para almacenar los valores de la región
+      let region = new Set();
+      // Recorrer cada celda de la región
+      for (let k = 0; k < 3; k++) {
+        for (let l = 0; l < 3; l++) {
+          // Obtener el valor en la posición [i + k][j + l] del arreglo
+          let valor = arreglo[i + k][j + l];
+          // Verificar si el valor ya está en el conjunto de la región
+          if (region.has(valor)) {
+            // Si lo está, el arreglo no es válido
+            return false;
+          }
+          // Agregar el valor al conjunto de la región
+          region.add(valor);
+        }
+      }
+    }
+  }
+  // Si se llega a este punto, el arreglo es válido
+  return true;
+}
