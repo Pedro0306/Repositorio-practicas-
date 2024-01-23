@@ -1,0 +1,20 @@
+function calcularFracciones(numeroIteraciones) {
+    let fraccion = 1;
+    let decimal = 0.5;
+
+    console.log("Iteración | Fracción | Decimal");
+    console.log("----------------------------");
+
+    for (let i = 1; i <= numeroIteraciones; i++) {
+        console.log(`${i}\t\t${fraccion}\t\t${decimal.toFixed(6)}`);
+        
+        fraccion /= 2;
+        decimal /= 2;
+    }
+}
+
+// Definir el número de iteraciones que deseas mostrar
+const numeroIteraciones = 7; // Puedes ajustar este valor según tus necesidades
+
+// Llamar a la función para calcular y mostrar las fracciones
+calcularFracciones(numeroIteraciones);
