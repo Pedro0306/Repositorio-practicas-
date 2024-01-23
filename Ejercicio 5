@@ -1,87 +1,60 @@
-import java.util.Scanner;
+function esConsecutivo(arr, n) {
+    let numerosConsecutivos = [];
+    for (let i = 1; i <= n * n; i++) {
+        numerosConsecutivos.push(i);
+    }
 
-public class ProgramaCuadrado {
-    public static void main(String[] args) {
-        // Crear un objeto Scanner para leer la entrada del usuario
-        Scanner scanner = new Scanner(System.in);
+    let arregloPlano = arr.flat();
+    arregloPlano.sort((a, b) => a - b);
 
-        // Leer el tamaño del arreglo cuadrado
-        System.out.print("Inserta el tamaño n: ");
-        int n = scanner.nextInt();
+    return JSON.stringify(arregloPlano) === JSON.stringify(numerosConsecutivos);
+}
 
-        // Leer el arreglo cuadrado
-        int[][] arreglo = new int[n][n];
-        System.out.println("Inserta los elementos del arreglo:");
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                arreglo[i][j] = scanner.nextInt();
-            }
+function esCuadradoMagico(arr, n) {
+    let sumaPrincipal = 0;
+    let sumaSecundaria = 0;
+
+    for (let i = 0; i < n; i++) {
+        sumaPrincipal += arr[i][i];
+        sumaSecundaria += arr[i][n - i - 1];
+    }
+
+    if (sumaPrincipal !== sumaSecundaria) {
+        return false;
+    }
+
+    for (let i = 0; i < n; i++) {
+        let filaSuma = 0;
+        let columnaSuma = 0;
+
+        for (let j = 0; j < n; j++) {
+            filaSuma += arr[i][j];
+            columnaSuma += arr[j][i];
         }
 
-        // Verificar si el arreglo tiene números consecutivos
-        if (esConsecutivo(arreglo, n * n)) {
-            System.out.println("El arreglo sí tiene números consecutivos");
-        } else {
-            System.out.println("El arreglo no tiene números consecutivos");
-        }
-
-        // Verificar si el arreglo es un cuadrado mágico
-        if (esCuadradoMagico(arreglo, n)) {
-            System.out.println("El arreglo es un cuadrado mágico");
-        } else {
-            System.out.println("El arreglo no es un cuadrado mágico");
+        if (filaSuma !== sumaPrincipal || columnaSuma !== sumaPrincipal) {
+            return false;
         }
     }
 
-    // Función para verificar si el arreglo tiene números consecutivos desde 1 hasta n^2
-    private static boolean esConsecutivo(int[][] arreglo, int nCuadrado) {
-        int n = arreglo.length;
+    return true;
+}
 
-        // Crear un arreglo plano con los elementos del arreglo cuadrado
-        int[] flattenArr = new int[n * n];
-        int index = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                flattenArr[index++] = arreglo[i][j];
-            }
-        }
+let n = parseInt(prompt("Inserta el tamaño n:"));
 
-        // Verificar si los números son consecutivos
-        for (int i = 0; i < nCuadrado; i++) {
-            if (flattenArr[i] != i + 1) {
-                return false;
-            }
-        }
+let matriz = [];
+for (let i = 0; i < n; i++) {
+    let fila = prompt(`Fila ${i + 1}:`).split(",").map(Number);
+    matriz.push(fila);
+}
 
-        return true;
+if (esConsecutivo(matriz, n)) {
+    console.log("El arreglo sí tiene números consecutivos.");
+    if (esCuadradoMagico(matriz, n)) {
+        console.log("Y es un cuadrado mágico.");
+    } else {
+        console.log("Pero no es un cuadrado mágico.");
     }
-
-    // Función para verificar si el arreglo es un cuadrado mágico
-    private static boolean esCuadradoMagico(int[][] arreglo, int n) {
-        // Calcular la suma mágica
-        int sumaMagica = n * (n * n + 1) / 2;
-
-        // Verificar filas y columnas
-        for (int i = 0; i < n; i++) {
-            int sumaFila = 0;
-            int sumaColumna = 0;
-            for (int j = 0; j < n; j++) {
-                sumaFila += arreglo[i][j];
-                sumaColumna += arreglo[j][i];
-            }
-            if (sumaFila != sumaMagica || sumaColumna != sumaMagica) {
-                return false;
-            }
-        }
-
-        // Verificar diagonales
-        int sumaDiagonalPrincipal = 0;
-        int sumaDiagonalSecundaria = 0;
-        for (int i = 0; i < n; i++) {
-            sumaDiagonalPrincipal += arreglo[i][i];
-            sumaDiagonalSecundaria += arreglo[i][n - i - 1];
-        }
-
-        return sumaDiagonalPrincipal == sumaMagica && sumaDiagonalSecundaria == sumaMagica;
-    }
+} else {
+    console.log("El arreglo no tiene números consecutivos.");
 }
