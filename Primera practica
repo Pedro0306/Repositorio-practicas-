@@ -1,0 +1,25 @@
+function esCorreoElectronico(cadena) {
+    // Verifica la presencia del carácter '@'
+    if (!cadena.includes('@')) {
+        return false;
+    }
+
+    // Verifica las terminaciones .com, .com.mx y .mx
+    const terminacionesValidas = ['.com', '.com.mx', '.mx'];
+    for (const terminacion of terminacionesValidas) {
+        if (cadena.endsWith(terminacion)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// Programa principal
+const cadenaIngresada = prompt("Ingrese una cadena de texto: ");
+
+if (esCorreoElectronico(cadenaIngresada)) {
+    console.log("La cadena ingresada parece ser un correo electrónico válido.");
+} else {
+    console.log("La cadena ingresada NO es un correo electrónico válido.");
+}
